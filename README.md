@@ -34,6 +34,10 @@ If you require the Barcode to be a different size, feel free to edit the code.
 Change the following lines:
 {"module_width":0.35, "module_height":16, "font_size": 25, "text_distance": 0.85, "quiet_zone": 0})
 
+and
+
+dsize=(158,100) on line 34 where X, Y is the width and height of the final image.
+
 ## Planned Features
 
 The planned features are in no particular order
