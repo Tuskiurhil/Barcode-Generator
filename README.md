@@ -22,7 +22,7 @@ Barcode-Generator is a **PythonScript** that takes a Value, formats it to a stri
 
 Download the above mentioned libraries with pip.
 
-* Example "pip install PySimpleGUI" or "pip3 install PySimpleGUI" depening on your version of Python.
+* Example "pip install PySimpleGUI" or "pip3 install PySimpleGUI" depending on your version of Python.
 
 To run the script, simply put the "code128.py" file in an accessible location and open it with your terminal.
 
