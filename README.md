@@ -42,6 +42,5 @@ dsize=(158,100) on line 34 where X, Y is the width and height of the final image
 
 The planned features are in no particular order
 
-* Ability to input more than one Value, seperated by a comma and/or blank space. (eg. "12345,67890,etc.")
 * Ability to select which Barcode Format to use
 * Ability to select desired resolution of output barcode
