@@ -33,6 +33,10 @@ To run the script, simply put the "barcodegen.py" file in an accessible location
 * Example $BASH: *"python3 /home/"user"/Desktop/code128.py"*
 
 Then just input your Value (eg. "12345", multiple Values can be seperated with a comma eg. "12345,23456,34567"), hit "Create Barcode(s)" and the Script will create a .png file of your barcodes.
+
+The Barcode Images will be put in the same location as the .py file and they will be named according to the Value you gave them.
+
+
 If you require the Barcode to be a different size, feel free to edit the code.
 
 Change the following lines:
