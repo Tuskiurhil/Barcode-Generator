@@ -1,3 +1,4 @@
+# Barcode Generator v0.1 for public release
 #   import main functionality
 import PySimpleGUI as sg
 from barcode import Code128
