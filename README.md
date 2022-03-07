@@ -15,6 +15,7 @@ Barcode-Generator is a **PythonScript** that takes Values, formats them to a str
 
 * Current Support:
   -  Code128
+  -  Code39
 
 * Requirements:
   - PySimpleGUI
@@ -36,21 +37,12 @@ Then just input your Value (eg. "12345", multiple Values can be seperated with a
 
 The Barcode Images will be put in the same location as the .py file and they will be named according to the Value you gave them.
 
+To change the resolution of the Output Image, adjust the Values in the fields Width and Height
 
-If you require the Barcode to be a different size, feel free to edit the code.
-
-Change the following lines:
-{"module_width":0.35, "module_height":16, "font_size": 25, "text_distance": 0.85, "quiet_zone": 0})
-
-and
-
-dsize=(158,100) where X, Y is the width and height of the final image.
 
 ## Planned Features
 
 The planned features are in no particular order
 
-* Ability to select which Barcode Format to use
-* Ability to select size of output image
+* Add more Formats
 * Ability to select filetype of output image (.jpg, .gif, etc.)
-* Ability to select desired resolution of output barcode
