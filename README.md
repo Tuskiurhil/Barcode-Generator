@@ -8,15 +8,25 @@ A Python3 based Barcode Generator
 
 ## General info
 
-![grafik](https://user-images.githubusercontent.com/79027579/157053288-cfa9b7b0-b42a-4994-a1b8-497fd28bd7e5.png)
+![grafik](https://user-images.githubusercontent.com/79027579/157256767-d4dde2c8-5e74-48ad-aef7-254c14aa41ef.png)
 ![grafik](https://user-images.githubusercontent.com/79027579/152145930-2443db9a-d50a-429d-b6a7-aa542a3d6e96.png)
 
 
 Barcode-Generator is a **PythonScript** that takes Values, formats them to a string and turns them into Barcodes
 
 * Current Support:
-  -  Code128
-  -  Code39
+  - Code128
+  - Code39
+  - European Article Number 8
+  - European Article Number 13
+  - European Article Number 14
+  - Japan Article Number
+  - International Standard Book Number 10
+  - International Standard Book Number 13
+  - International Standard Serial Number
+  - Universal Product Code A
+  - PZN (PharmaZentralNummer - Germanys Standardized Pharmaceutical Number)
+
 
 * Requirements:
   - PySimpleGUI
