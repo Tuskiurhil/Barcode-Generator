@@ -1,3 +1,6 @@
+<img src="https://user-images.githubusercontent.com/79027579/157531034-474a6480-1168-44fc-a7b5-d66144a8103b.png" width=30% height=30%>
+
+
 # Barcode-Generator
 A Python3 based Barcode Generator
 
