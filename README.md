@@ -56,5 +56,6 @@ To change the resolution of the Output Image, adjust the Values in the fields Wi
 The planned features are in no particular order
 
 * Adding more Image Formats 
+* Adding additional Code Formats (Datamatrix, QR, Aztec, etc.)
 * Ability to choose where the barcodes will be saved (including potential subfolders)
 * Ability to toggle console output
