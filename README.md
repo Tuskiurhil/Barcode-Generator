@@ -8,8 +8,8 @@ A Python3 based Barcode Generator
 
 ## General info
 
-![grafik](https://user-images.githubusercontent.com/79027579/157256767-d4dde2c8-5e74-48ad-aef7-254c14aa41ef.png)
-![grafik](https://user-images.githubusercontent.com/79027579/152145930-2443db9a-d50a-429d-b6a7-aa542a3d6e96.png)
+![grafik](https://user-images.githubusercontent.com/79027579/157472974-50093cb0-41f5-48fe-bac9-367be0ded99c.png)
+![grafik](https://user-images.githubusercontent.com/79027579/157473184-7a20c2bb-b78a-4171-a751-fbb0b2beb08b.png)
 
 
 Barcode-Generator is a **PythonScript** that takes Values, formats them to a string and turns them into Barcodes
@@ -55,5 +55,5 @@ To change the resolution of the Output Image, adjust the Values in the fields Wi
 
 The planned features are in no particular order
 
-* Add more Formats
-* Ability to select filetype of output image (.jpg, .gif, etc.)
+* Adding more Image Formats 
+* Ability to choose where the barcodes will be saved (including potential subfolders)
