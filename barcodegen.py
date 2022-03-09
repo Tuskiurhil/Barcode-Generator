@@ -1,6 +1,7 @@
 # Barcode Generator v0.25 for public release
 
 #   import main functionality
+from subprocess import check_output
 import PySimpleGUI as sg
 from barcode import (
     Code128 as code128, 
@@ -18,8 +19,13 @@ from barcode import (
 from barcode.writer import ImageWriter
 import cv2
 import numpy as np
+import time
 
 def main():
+
+    buttonname = ""
+    IMGFORMAT = ""
+    EXTENSION = ""
 
         #   defining main function of creating and saving barcode image
     def createbarcode():
@@ -31,14 +37,32 @@ def main():
         #   this will take our input, create a barcode and save it as a .png
         for code in SKUS:
             #   "button" will be replaced by the radio selection done further below
-            barcode = button(code, writer=ImageWriter())
-            barcode.save(code, {"module_width":0.35, "module_height":16, "font_size": 25, "text_distance": 0.85, "quiet_zone": 0})
+            
+            if values["-PNG-"] == True:
+                IMGFORMAT = 'PNG'
+                EXTENSION = '.png'
+            elif values["-JPEG-"] == True:
+                IMGFORMAT = 'JPEG'
+                EXTENSION = '.jpeg'
+            elif values["-BMP-"] == True:
+                IMGFORMAT = 'BMP'
+                EXTENSION = '.bmp'
+
+            barcode = button(code, writer=ImageWriter(IMGFORMAT))
+            barcode.save(code+' - '+buttonname, {"module_width":0.35, "module_height":16, "font_size": 25, "text_distance": 0.85, "quiet_zone": 0})
             #   resizing our .png to fit within our product label document
-            filename = (code+'.png')
+            filename = (code+' - '+buttonname+EXTENSION)
+            #if values['-CHECKOUTPUT-'] == True:
+            print(filename)
             img = cv2.imread(filename)
             #   resizing the image according to the parameters given
             res = cv2.resize(img, dsize=(int(WIDTH), int(HEIGHT)), interpolation=cv2.INTER_CUBIC)
             cv2.imwrite(filename, res)
+            #elif values['-CHECKOUTPUT-'] == False:
+            #    img = cv2.imread(filename)
+            #    #   resizing the image according to the parameters given
+            #    res = cv2.resize(img, dsize=(int(WIDTH), int(HEIGHT)), interpolation=cv2.INTER_CUBIC)
+            #    cv2.imwrite(filename, res)
 
 
     #   defining window colour
@@ -49,8 +73,12 @@ def main():
     #   Content of the GUI, including Button Selection for which Barcode Format to use
     layout = [  [sg.Text('Barcode Generator')],
                 [sg.Text('Enter SKU'), sg.InputText()],
-                [sg.Text('Width:'), sg.InputText('158', key='-WIDTH-')],
-                [sg.Text('Height:'), sg.InputText('100', key='-HEIGHT-')],
+                [sg.Text('Width:'), sg.InputText('326', key='-WIDTH-')],
+                [sg.Text('Height:'), sg.InputText('274', key='-HEIGHT-')],
+
+                [sg.Radio('PNG', "IMGFORMAT", default=True, key="-PNG-"),
+                sg.Radio('JPEG', "IMGFORMAT", key="-JPEG-"),
+                sg.Radio('BMP', "IMGFORMAT", key="-BMP-")],
                 
                 [sg.Radio('Code128', "SELECTION", default=True, key="-BUTTON-"), 
                 sg.Radio('Code39', "SELECTION", key="-BUTTON1-"),
@@ -65,6 +93,8 @@ def main():
 
                 [sg.Radio('ISBN10', "SELECTION", key="-BUTTON9-"),
                 sg.Radio('ISBN13', "SELECTION", key="-BUTTON10-")],
+
+                #[sg.Checkbox('Print Output to Console', default=False, key='CHECKOUTPUT')],
 
                 [sg.Button('Create Barcode(s)'), sg.Button('Close')] ]
 
@@ -85,26 +115,37 @@ def main():
             try:
                 if values["-BUTTON-"] == True:
                     button = code128
+                    buttonname = 'code128'
                 elif values["-BUTTON1-"] == True:
                     button = code39
+                    buttonname = 'code39'
                 elif values["-BUTTON2-"] == True:
                     button = ean8
+                    buttonname = 'ean8'
                 elif values["-BUTTON3-"] == True:
                     button = ean13
+                    buttonname = 'ean13'
                 elif values["-BUTTON4-"] == True:
                     button = ean14
+                    buttonname = 'ean14'
                 elif values["-BUTTON5-"] == True:
                     button = upca
+                    buttonname = 'upca'
                 elif values["-BUTTON6-"] == True:
                     button = jan
+                    buttonname = 'jan'
                 elif values["-BUTTON7-"] == True:
                     button = issn
+                    buttonname = 'issn'
                 elif values["-BUTTON8-"] == True:
                     button = pzn
+                    buttonname = 'pzn'
                 elif values["-BUTTON9-"] == True:
                     button = isbn10
+                    buttonname = 'isbn10'
                 elif values["-BUTTON10-"] == True:
                     button = isbn13
+                    buttonname = 'isbn13'
             except ValueError as err:
                 err.args = ("Invalid Image Size or Input")
             
