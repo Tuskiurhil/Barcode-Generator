@@ -63,6 +63,7 @@ The planned features are in no particular order
 
 * Adding more Image Formats 
 * Adding additional Code Formats (Aztec, etc.)
+* Ability to choose colour of Layout (Creation of settings file)
 * Ability to choose where the barcodes will be saved (including potential subfolders)
 * Ability to colour Code (Foreground and Background)
 * Creating an executable/AppImage for easier use
