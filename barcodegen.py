@@ -15,6 +15,8 @@ from barcode import (
     )
 from barcode.writer import ImageWriter
 import qrcode
+from PIL import Image
+from pylibdmtx.pylibdmtx import encode
 import cv2
 import numpy as np
 import time
@@ -105,7 +107,29 @@ def main():
 #   Replacing the / with a dot to make sure that URL's will not break the program when saving
             code = code.replace("/",".")
             img.save(code+EXTENSION)
-            
+
+
+#   --- MAIN DATAMATRIX FUNCTION ---
+# ____________________________________________________________________
+    def createdatamatrix():
+        global IMGFORMAT
+        global EXTENSION
+        target = values[0]
+        print('\nCreating QR-Code')
+        SKU = str(values[0])
+        SKUS = SKU.split(',')
+        for code in SKUS:
+            if values["-SVG-"] == True:
+                IMGFORMAT = 'SVG'
+                EXTENSION = '.svg'
+            if values['-CHECKOUTPUT-'] == True:
+                print(code+EXTENSION)
+#   Datamatrix Creation
+#   The input needs to be formated to utf-8, otherwise the output will be a garbled mess
+        encodedmatrix = encode(code.encode('utf-8'))
+        encodedimg = Image.frombytes('RGB', (encodedmatrix.width, encodedmatrix.height), encodedmatrix.pixels)
+        encodedimg.save(code+'.png')
+# ____________________________________________________________________
 
 #   Content of the GUI, including Button Selection for which Barcode Format to use
 #   Selection changes depending on wether or not the Version in use is up to date.
@@ -124,6 +148,25 @@ def main():
 
         [sg.Radio('QR', "SELECTION", key="-BUTTON11-", default=True)],
         #sg.Radio('DATAMATRIX', "SELECTION", key="-BUTTON12-")],
+
+        [sg.Checkbox('Print Output to Console', default=False, key='-CHECKOUTPUT-')],
+
+        [sg.Button('Create Barcode(s)'), sg.Button('Close')] ]
+
+#   User has chosen to create a Datamatrix Code
+    layoutDATAMATRIX = [  
+        [sg.Text('Datamatrix Code Generator')],
+        [sg.Text('Enter Data'), sg.InputText()],
+        #[sg.Text('Size (1-40)'), sg.InputText('1', key='-QRSIZE-')],
+        #[sg.Text('Box Size'), sg.InputText('10', key='-QRBOXSIZE-')],
+        #[sg.Text('Border'), sg.InputText('1', key='-QRBORDER-')],
+
+        [sg.Radio('SVG', "IMGFORMAT", default=True, key="-SVG-")],
+        #[sg.Radio('PNG', "IMGFORMAT", default=True, key="-PNG-"),
+        #sg.Radio('JPEG', "IMGFORMAT", key="-JPEG-"),
+        #sg.Radio('BMP', "IMGFORMAT", key="-BMP-")],
+
+        [sg.Radio('DATAMATRIX', "SELECTION", key="-BUTTON12-", default=True)],
 
         [sg.Checkbox('Print Output to Console', default=False, key='-CHECKOUTPUT-')],
 
@@ -163,6 +206,9 @@ def main():
             event, values = window.read()
     elif QRCODESELECTION == 1:
             window = sg.Window('Barcode Generator', layoutQR)
+            event, values = window.read()
+    elif DATAMATRIXSELECTION == 1:
+            window = sg.Window('Barcode Generator', layoutDATAMATRIX)
             event, values = window.read()
 
 #   Creating GUI Window
@@ -226,6 +272,9 @@ def main():
                 elif QRCODESELECTION == 1:
                         if values["-BUTTON11-"] == True:
                             createqrcode()
+                elif DATAMATRIXSELECTION == 1:
+                        if values["-BUTTON12-"] == True:
+                            createdatamatrix()
             except ValueError as err:
                 err.args = ("Invalid Image Size or Input")
             
@@ -260,7 +309,7 @@ def checkforupdate():
 #   ******** IMPORTANT ********
 #   Version Number of current script, don't forget to change after updating, otherwise Script Update functionality might not work
 updating = 0
-versionnr = 'v0.4'
+versionnr = 'v0.4.5'
 #   ******** IMPORTANT ********
 
 def start():
@@ -272,13 +321,15 @@ def start():
         [sg.Button('Update Available!')],
         [sg.Radio('BAR - CODE', "SELECTION", default=True, key="-BARCODES-"),
         sg.Radio('QR - CODE', "SELECTION", key="-QRCODES-")],
+        sg.Radio('Datamatrix', "SELECTION", key="-DATAMATRIX-"),
         [sg.Button('Continue'), sg.Button('Close')] ]]
 
 #   No Update or no Internet Connection
     layout2 = [  
         [sg.Text('- Choose your desired Code Type -'),
         [sg.Radio('BAR - CODE', "SELECTION", default=True, key="-BARCODES-"),
-        sg.Radio('QR - CODE', "SELECTION", key="-QRCODES-")],
+        sg.Radio('QR - CODE', "SELECTION", key="-QRCODES-"),
+        sg.Radio('Datamatrix', "SELECTION", key="-DATAMATRIX-")],
         [sg.Button('Continue'), sg.Button('Close')] ]]
 
 
@@ -296,6 +347,7 @@ def start():
 
     global BARCODESELECTION
     global QRCODESELECTION
+    global DATAMATRIXSELECTION
 #   This will grab the Name of the current release from the github repo (eg. v0.3) and compare it to the version number defined further above
 #   ... if the version numbers don't match the Main Menu Screen will show an "Update Available!" Button that when pressed will bring the
 #   ... user to the latest release page on Github using their default Webbrowser.
@@ -327,11 +379,19 @@ def start():
             if values["-BARCODES-"] == True:
                 BARCODESELECTION = 1
                 QRCODESELECTION = 0
+                DATAMATRIXSELECTION = 0
                 window.close()
                 main()
             elif values['-QRCODES-'] == True:
                 QRCODESELECTION = 1
                 BARCODESELECTION = 0
+                DATAMATRIXSELECTION = 0
+                window.close()
+                main()
+            elif values['-DATAMATRIX-'] == True:
+                QRCODESELECTION = 0
+                BARCODESELECTION = 0
+                DATAMATRIXSELECTION = 1
                 window.close()
                 main()
         if event == 'Update Available!':
