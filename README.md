@@ -30,12 +30,15 @@ Barcode-Generator is a **PythonScript** that takes Values, formats them to a str
   - Universal Product Code A
   - PZN (PharmaZentralNummer - Germanys Standardized Pharmaceutical Number)
 
+  - QR Code
 
 * Requirements:
   - PySimpleGUI
   - python-barcode
   - opencv-python
   - numpy
+  - qrcode
+  - requests
 	
 ## Setup and Usage
 
@@ -59,6 +62,6 @@ To change the resolution of the Output Image, adjust the Values in the fields Wi
 The planned features are in no particular order
 
 * Adding more Image Formats 
-* Adding additional Code Formats (Datamatrix, QR, Aztec, etc.)
+* Adding additional Code Formats (Datamatrix, Aztec, etc.)
 * Ability to choose where the barcodes will be saved (including potential subfolders)
-* Ability to toggle console output
+* Creating an executable/AppImage for easier use
