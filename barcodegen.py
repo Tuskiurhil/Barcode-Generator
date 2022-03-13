@@ -81,6 +81,7 @@ def main():
                 IMGFORMAT = 'PNG'
                 EXTENSION = '.png'
             elif values["-JPEG-"] == True:
+                window.close()
                 sg.popup_error('JPEG is not supported for QR-Codes!')
                 start()
                 #IMGFORMAT = 'JPEG'
