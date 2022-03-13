@@ -100,9 +100,11 @@ def main():
             )
             qr.add_data(code)
             qr.make(fit=True)
-
             img = qr.make_image(fill_color="black", back_color="white")
+#   Replacing the / with a dot to make sure that URL's will not break the program when saving
+            code = code.replace("/",".")
             img.save(code+EXTENSION)
+            
 
 #   Content of the GUI, including Button Selection for which Barcode Format to use
 #   Selection changes depending on wether or not the Version in use is up to date.
