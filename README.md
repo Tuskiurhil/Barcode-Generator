@@ -53,13 +53,25 @@ Download the above mentioned libraries with pip.
 
 To run the script, simply put the "barcodegen.py" file in an accessible location and open it with your terminal.
 
-* Example $BASH: *"python3 /home/"user"/Desktop/code128.py"*
+* Example $BASH: *"python3 /home/"user"/Desktop/barcodegen.py"*
 
-Then just input your Value (eg. "12345", multiple Values can be seperated with a comma eg. "12345,23456,34567"), select which Filetype and Barcode Format you want, hit "Create Barcode(s)" and the Script will turn your input into barcode images.
+1.A window will pop-up allowing you to select which type of code you want to create.
 
-The Barcode Images will be put in the same location as the .py file and they will be named according to the Value and Barcode Format you gave them.
+![image](https://user-images.githubusercontent.com/79027579/158079492-96933cb2-1848-474f-a213-c638dca6c8fa.png)
 
-To change the resolution of the Output Image, adjust the Values in the fields Width and Height.
+2.Make the necessary selections in the following Window (Entering Data/SKU, Choosing Width/Height, Choosing Filetype, etc.).
+
+![image](https://user-images.githubusercontent.com/79027579/158079576-5f279f92-8adb-4378-b661-3bb8d559d351.png)
+
+3.Click on "Create Barcode(s)". 
+
+![image](https://user-images.githubusercontent.com/79027579/158079587-f1ec82fc-412d-4e2c-9c21-9c7fdd4a67dd.png)
+
+4.Your Barcodes will be created and saved in the same folder where the .py file is located.
+
+![image](https://user-images.githubusercontent.com/79027579/158079600-c1c88672-7057-4c65-a724-a23a36fa03fa.png)
+
+
 
 
 ## Planned Features
