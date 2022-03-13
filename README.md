@@ -55,24 +55,7 @@ To run the script, simply put the "barcodegen.py" file in an accessible location
 
 * Example $BASH: *"python3 /home/"user"/Desktop/barcodegen.py"*
 
-1.A window will pop-up allowing you to select which type of code you want to create.
-
-![image](https://user-images.githubusercontent.com/79027579/158079492-96933cb2-1848-474f-a213-c638dca6c8fa.png)
-
-2.Make the necessary selections in the following Window (Entering Data/SKU, Choosing Width/Height, Choosing Filetype, etc.).
-
-![image](https://user-images.githubusercontent.com/79027579/158079576-5f279f92-8adb-4378-b661-3bb8d559d351.png)
-
-3.Click on "Create Barcode(s)". 
-
-![image](https://user-images.githubusercontent.com/79027579/158079587-f1ec82fc-412d-4e2c-9c21-9c7fdd4a67dd.png)
-
-4.Your Barcodes will be created and saved in the same folder where the .py file is located.
-
-![image](https://user-images.githubusercontent.com/79027579/158079600-c1c88672-7057-4c65-a724-a23a36fa03fa.png)
-
-
-
+<img src="https://user-images.githubusercontent.com/79027579/158082081-8406fdd6-ad65-4897-813a-c253572c77a0.gif" width="80%" height="80%" />
 
 ## Planned Features
 
