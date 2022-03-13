@@ -13,6 +13,8 @@ A Python3 based Barcode Generator
 
 ![grafik](https://user-images.githubusercontent.com/79027579/157472974-50093cb0-41f5-48fe-bac9-367be0ded99c.png)
 ![grafik](https://user-images.githubusercontent.com/79027579/157473184-7a20c2bb-b78a-4171-a751-fbb0b2beb08b.png)
+![image](https://user-images.githubusercontent.com/79027579/158069677-f8efcbfb-9cea-4fd6-b7fb-62d4231376f0.png)
+
 
 
 Barcode-Generator is a **PythonScript** that takes Values, formats them to a string and turns them into Barcodes
