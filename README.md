@@ -32,7 +32,7 @@ Barcode-Generator is a **PythonScript** that takes Values, formats them to a str
   - Universal Product Code A
   - PZN (PharmaZentralNummer - Germanys Standardized Pharmaceutical Number)
 
-  - QR Code (Does not Support URL's currently!)
+  - QR Code
 
 * Requirements:
   - PySimpleGUI
@@ -63,7 +63,6 @@ To change the resolution of the Output Image, adjust the Values in the fields Wi
 
 The planned features are in no particular order
 
-* Support for URL's in QR
 * Adding more Image Formats 
 * Adding additional Code Formats (Datamatrix, Aztec, etc.)
 * Ability to choose where the barcodes will be saved (including potential subfolders)
