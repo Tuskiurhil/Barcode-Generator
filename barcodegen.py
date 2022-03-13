@@ -319,17 +319,23 @@ def start():
     layout1 = [  
         [sg.Text('- Choose your desired Code Type -'),
         [sg.Button('Update Available!')],
-        [sg.Radio('BAR - CODE', "SELECTION", default=True, key="-BARCODES-"),
-        sg.Radio('QR - CODE', "SELECTION", key="-QRCODES-")],
-        sg.Radio('Datamatrix', "SELECTION", key="-DATAMATRIX-"),
+        [sg.Radio('BAR - CODE', "SELECTION", default=True, key="-BARCODES-")],
+
+        [sg.Radio('QR - CODE', "SELECTION", key="-QRCODES-")],
+
+        [sg.Radio('Datamatrix', "SELECTION", key="-DATAMATRIX-")],
+
         [sg.Button('Continue'), sg.Button('Close')] ]]
 
 #   No Update or no Internet Connection
     layout2 = [  
         [sg.Text('- Choose your desired Code Type -'),
-        [sg.Radio('BAR - CODE', "SELECTION", default=True, key="-BARCODES-"),
-        sg.Radio('QR - CODE', "SELECTION", key="-QRCODES-"),
-        sg.Radio('Datamatrix', "SELECTION", key="-DATAMATRIX-")],
+        [sg.Radio('BAR - CODE', "SELECTION", default=True, key="-BARCODES-")],
+        
+        [sg.Radio('QR - CODE', "SELECTION", key="-QRCODES-")],
+
+        [sg.Radio('Datamatrix', "SELECTION", key="-DATAMATRIX-")],
+
         [sg.Button('Continue'), sg.Button('Close')] ]]
 
 
