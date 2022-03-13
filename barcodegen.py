@@ -128,6 +128,7 @@ def main():
 #   The input needs to be formated to utf-8, otherwise the output will be a garbled mess
         encodedmatrix = encode(code.encode('utf-8'))
         encodedimg = Image.frombytes('RGB', (encodedmatrix.width, encodedmatrix.height), encodedmatrix.pixels)
+        code = code.replace("/",".")
         encodedimg.save(code+'.png')
 # ____________________________________________________________________
 
