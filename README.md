@@ -34,12 +34,15 @@ Barcode-Generator is a **PythonScript** that takes Values, formats them to a str
 
   - QR Code
 
+  - Datamatrix
+
 * Requirements:
   - PySimpleGUI
   - python-barcode
+  - pylibdmtx
+  - qrcode
   - opencv-python
   - numpy
-  - qrcode
   - requests
 	
 ## Setup and Usage
@@ -64,6 +67,7 @@ To change the resolution of the Output Image, adjust the Values in the fields Wi
 The planned features are in no particular order
 
 * Adding more Image Formats 
-* Adding additional Code Formats (Datamatrix, Aztec, etc.)
+* Adding additional Code Formats (Aztec, etc.)
 * Ability to choose where the barcodes will be saved (including potential subfolders)
+* Ability to colour Code (Foreground and Background)
 * Creating an executable/AppImage for easier use
