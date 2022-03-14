@@ -6,9 +6,9 @@ A Python3 based Barcode Generator
 
 ## Table of contents
 * [General info](#general-info)
+* [Windows Executable](#windows-executable)
 * [Setup and Usage](#setup-and-Usage)
 * [Planned Features](#planned-features)
-* [Windows Executable](#windows-executable)
 
 ## General info
 
@@ -45,6 +45,13 @@ Barcode-Generator is a **PythonScript** that takes Values, formats them to a str
   - opencv-python
   - numpy
   - requests
+
+## Windows Executable
+
+There is now a Windows Executable (Test Build).
+Just download and execute! (initial start up is slow)
+
+[Barcodegen v05.exe](https://www.dropbox.com/s/3edxh5bm2qhpdta/barcodegen%20v05.exe?raw=1)
 	
 ## Setup and Usage
 
@@ -66,12 +73,4 @@ The planned features are in no particular order
 * Adding additional Code Formats (Aztec, etc.)
 * Ability to choose where the barcodes will be saved (including potential subfolders)
 * Ability to colour Code (Foreground and Background)
-* Creating an executable/AppImage for easier use
-
-
-## General info
-
-There is now a Windows Executable (Test Build).
-Just download and execute!
-
-[Barcodegen v05.exe](https://www.dropbox.com/s/3edxh5bm2qhpdta/barcodegen%20v05.exe?raw=1)
+* Creating an executable/AppImage for easier use [(Windows Version is now Available!)](https://www.dropbox.com/s/3edxh5bm2qhpdta/barcodegen%20v05.exe?raw=1)
