@@ -8,6 +8,7 @@ A Python3 based Barcode Generator
 * [General info](#general-info)
 * [Setup and Usage](#setup)
 * [Planned Features](#updates)
+* [Windows Executable](#windows)
 
 ## General info
 
@@ -66,3 +67,11 @@ The planned features are in no particular order
 * Ability to choose where the barcodes will be saved (including potential subfolders)
 * Ability to colour Code (Foreground and Background)
 * Creating an executable/AppImage for easier use
+
+
+## General info
+
+There is now a Windows Executable (Test Build).
+Just download and execute!
+
+[Barcodegen v05.exe](https://www.dropbox.com/s/3edxh5bm2qhpdta/barcodegen%20v05.exe?raw=1)
