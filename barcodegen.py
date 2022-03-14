@@ -22,14 +22,17 @@ import numpy as np
 import time
 import requests
 import webbrowser
+import os
 
 IMGFORMAT = ""
 EXTENSION = ""
+SELTHEME = ""
 
 def main():
 
     buttonname = ""
 
+# ____________________________________________________________________
 #   --- MAIN BARCODE FUNCTION ---
 #   defining main function of creating and saving barcode image
     def createbarcode():
@@ -44,7 +47,6 @@ def main():
         SKUS = SKU.split(',')
 #   this will take our input, create a barcode and save it as an image
         for code in SKUS:
-
             if values["-PNG-"] == True:
                 IMGFORMAT = 'PNG'
                 EXTENSION = '.png'
@@ -65,8 +67,9 @@ def main():
 #   resizing the image according to the parameters given
             res = cv2.resize(img, dsize=(int(WIDTH), int(HEIGHT)), interpolation=cv2.INTER_CUBIC)
             cv2.imwrite(filename, res)
+# ____________________________________________________________________
 
-
+# ____________________________________________________________________
 #   --- MAIN QR-CODE FUNCTION ---
     def createqrcode():
         QRVERSION = values['-QRSIZE-']
@@ -106,8 +109,9 @@ def main():
             img = qr.make_image(fill_color="black", back_color="white")
 #   Replacing the / with a dot to make sure that URL's will not break the program when saving
             code = code.replace("/",".")
+            code = code.replace(":",".")
             img.save(code+EXTENSION)
-
+# ____________________________________________________________________
 
 #   --- MAIN DATAMATRIX FUNCTION ---
 # ____________________________________________________________________
@@ -115,13 +119,22 @@ def main():
         global IMGFORMAT
         global EXTENSION
         target = values[0]
-        print('\nCreating QR-Code')
+        print('\nCreating Datamatrix-Code')
         SKU = str(values[0])
         SKUS = SKU.split(',')
         for code in SKUS:
-            if values["-SVG-"] == True:
-                IMGFORMAT = 'SVG'
-                EXTENSION = '.svg'
+            if values["-PNG-"] == True:
+                IMGFORMAT = 'PNG'
+                EXTENSION = '.png'
+            if values["-JPEG-"] == True:
+                IMGFORMAT = 'JPEG'
+                EXTENSION = '.jpeg'
+            if values["-BMP-"] == True:
+                IMGFORMAT = 'BMP'
+                EXTENSION = '.bmp'
+            if values["-GIF-"] == True:
+                IMGFORMAT = 'GIF'
+                EXTENSION = '.gif'
             if values['-CHECKOUTPUT-'] == True:
                 print(code+EXTENSION)
 #   Datamatrix Creation
@@ -129,7 +142,40 @@ def main():
         encodedmatrix = encode(code.encode('utf-8'))
         encodedimg = Image.frombytes('RGB', (encodedmatrix.width, encodedmatrix.height), encodedmatrix.pixels)
         code = code.replace("/",".")
-        encodedimg.save(code+'.png')
+        code = code.replace(":",".")
+        encodedimg.save(code+EXTENSION)
+# ____________________________________________________________________
+
+# ____________________________________________________________________
+#   Main Settings Function
+    def savesettings():
+        global SELTHEME
+        global selectedtheme
+        if values["-THEME1-"] == True:
+            with open("bcgsettings.txt", "w") as bcgsettings:
+                bcgsettings.write('BrownBlue')
+                bcgsettings.close
+        elif values["-THEME2-"] == True:
+            with open("bcgsettings.txt", "w") as bcgsettings:
+                bcgsettings.write('LightYellow')
+                bcgsettings.close
+        elif values["-THEME3-"] == True:
+            with open("bcgsettings.txt", "w") as bcgsettings:
+                bcgsettings.write('BrightColors')
+                bcgsettings.close
+        elif values["-THEME4-"] == True:
+            with open("bcgsettings.txt", "w") as bcgsettings:
+                bcgsettings.write('DarkAmber')
+                bcgsettings.close
+        elif values["-THEME5-"] == True:
+            with open("bcgsettings.txt", "w") as bcgsettings:
+                bcgsettings.write('SystemDefault1')
+                bcgsettings.close
+        elif values["-THEME6-"] == True:
+            with open("bcgsettings.txt", "w") as bcgsettings:
+                bcgsettings.write('Topanga')
+                bcgsettings.close
+
 # ____________________________________________________________________
 
 #   Content of the GUI, including Button Selection for which Barcode Format to use
@@ -162,10 +208,10 @@ def main():
         #[sg.Text('Box Size'), sg.InputText('10', key='-QRBOXSIZE-')],
         #[sg.Text('Border'), sg.InputText('1', key='-QRBORDER-')],
 
-        [sg.Radio('SVG', "IMGFORMAT", default=True, key="-SVG-")],
-        #[sg.Radio('PNG', "IMGFORMAT", default=True, key="-PNG-"),
-        #sg.Radio('JPEG', "IMGFORMAT", key="-JPEG-"),
-        #sg.Radio('BMP', "IMGFORMAT", key="-BMP-")],
+        [sg.Radio('PNG', "IMGFORMAT", default=True, key="-PNG-"),
+        sg.Radio('JPEG', "IMGFORMAT", key="-JPEG-"),
+        sg.Radio('BMP', "IMGFORMAT", key="-BMP-"),
+        sg.Radio('GIF', "IMGFORMAT", key="-GIF-")],
 
         [sg.Radio('DATAMATRIX', "SELECTION", key="-BUTTON12-", default=True)],
 
@@ -201,6 +247,25 @@ def main():
         [sg.Checkbox('Print Output to Console', default=False, key='-CHECKOUTPUT-')],
 
         [sg.Button('Create Barcode(s)'), sg.Button('Close')] ]
+
+#   User has chosen to change Settings
+    layoutSETTINGS = [  
+        [sg.Text('Settings:')],
+        # [sg.Text('Enter SKU'), sg.InputText()],
+        # [sg.Text('Width:'), sg.InputText('326', key='-WIDTH-')],
+        # [sg.Text('Height:'), sg.InputText('274', key='-HEIGHT-')],
+
+        [sg.Radio('BrownBlue', "THEME", default=True, key="-THEME1-"),
+        sg.Radio('LightYellow', "THEME", key="-THEME2-"),
+        sg.Radio('BrightColors', "THEME", key="-THEME3-"),
+        sg.Radio('DarkAmber', "THEME", key="-THEME4-"),
+        sg.Radio('SystemDefault1', "THEME", key="-THEME5-"),
+        sg.Radio('Topanga', "THEME", key="-THEME6-")],
+        #sg.Radio('BMP', "THEME", key="-BMP-")],
+        
+        #[sg.Checkbox('Print Output to Console', default=False, key='-CHECKOUTPUT-')],
+
+        [sg.Button('Save & Exit'), sg.Button('Close')] ]
         
     if BARCODESELECTION == 1:
             window = sg.Window('Barcode Generator', layoutBARCODE)
@@ -211,6 +276,9 @@ def main():
     elif DATAMATRIXSELECTION == 1:
             window = sg.Window('Barcode Generator', layoutDATAMATRIX)
             event, values = window.read()
+    elif SETTINGSSELECTION == 1:
+        window = sg.Window('Barcode Generator', layoutSETTINGS)
+        event, values = window.read()
 
 #   Creating GUI Window
     while True:
@@ -278,15 +346,56 @@ def main():
                             createdatamatrix()
             except ValueError as err:
                 err.args = ("Invalid Image Size or Input")
+#   When hitting "Save & Exit" the program will write the selected Theme to the settings file and then tell the user to restart the application. The program will close automatically.
+        elif event == 'Save & Exit':
+            try:
+                if SETTINGSSELECTION == 1:
+                        if values["-THEME1-"] == True:
+                            savesettings()
+                            [sg.Popup("Saving Settings. Please restart the Application")]
+                            break
+                        elif values["-THEME2-"] == True:
+                            savesettings()
+                            [sg.Popup("Saving Settings. Please restart the Application")]
+                            break
+                        elif values["-THEME3-"] == True:
+                            savesettings()
+                            [sg.Popup("Saving Settings. Please restart the Application")]
+                            break
+                        elif values["-THEME4-"] == True:
+                            savesettings()
+                            [sg.Popup("Saving Settings. Please restart the Application")]
+                            break
+                        elif values["-THEME5-"] == True:
+                            savesettings()
+                            [sg.Popup("Saving Settings. Please restart the Application")]
+                            break
+                        elif values["-THEME6-"] == True:
+                            savesettings()
+                            [sg.Popup("Saving Settings. Please restart the Application")]
+                            break
+            except ValueError as err:
+                err.args = ("Invalid Image Size or Input")
             
         window.close()
 
-        layout = [  [sg.Text('Please wait for your Barcode(s) to finish before you close this window!')],
+        layoutcreatecode = [  [sg.Text('Please wait for your Barcode(s) to finish before you close this window!')],
                     [sg.Text('creating barcode(s) for...')],
-                    [sg.Text(str(values[0]))],
+                   [sg.Text(str(values[0]))],
                     [sg.Button('New Barcode(s)'), sg.Button('Close')] ]
 
-        window = sg.Window(buttonname, layout)
+        if BARCODESELECTION == 1:
+            window = sg.Window(buttonname, layoutcreatecode)
+        elif QRCODESELECTION == 1:
+            window = sg.Window(buttonname, layoutcreatecode)
+        elif DATAMATRIXSELECTION == 1:
+            window = sg.Window(buttonname, layoutcreatecode)
+        # elif SETTINGSSELECTION == 1:
+        #     window = sg.Window(buttonname, layoutsavesettings)'
+
+
+
+        #window = sg.Window(buttonname, layoutcreatecode)
 
         while True:
             event, values = window.read()
@@ -307,10 +416,10 @@ def checkforupdate():
     if versionnr != response.json()["name"]:
         updating = 1
 
+updating = 0
 #   ******** IMPORTANT ********
 #   Version Number of current script, don't forget to change after updating, otherwise Script Update functionality might not work
-updating = 0
-versionnr = 'v0.4.5'
+versionnr = 'v0.5'
 #   ******** IMPORTANT ********
 
 def start():
@@ -326,6 +435,8 @@ def start():
 
         [sg.Radio('Datamatrix', "SELECTION", key="-DATAMATRIX-")],
 
+        [sg.Radio('Settings', "SELECTION", key="-SETTINGS-")],
+
         [sg.Button('Continue'), sg.Button('Close')] ]]
 
 #   No Update or no Internet Connection
@@ -337,12 +448,9 @@ def start():
 
         [sg.Radio('Datamatrix', "SELECTION", key="-DATAMATRIX-")],
 
+        [sg.Radio('Settings', "SELECTION", key="-SETTINGS-")],
+
         [sg.Button('Continue'), sg.Button('Close')] ]]
-
-
-
-#   defining window colour
-    sg.theme('BrownBlue')
 
 #   Grabbing latest version number from the github repo
 
@@ -355,6 +463,7 @@ def start():
     global BARCODESELECTION
     global QRCODESELECTION
     global DATAMATRIXSELECTION
+    global SETTINGSSELECTION
 #   This will grab the Name of the current release from the github repo (eg. v0.3) and compare it to the version number defined further above
 #   ... if the version numbers don't match the Main Menu Screen will show an "Update Available!" Button that when pressed will bring the
 #   ... user to the latest release page on Github using their default Webbrowser.
@@ -401,9 +510,43 @@ def start():
                 DATAMATRIXSELECTION = 1
                 window.close()
                 main()
+            elif values['-SETTINGS-'] == True:
+                QRCODESELECTION = 0
+                BARCODESELECTION = 0
+                DATAMATRIXSELECTION = 0
+                SETTINGSSELECTION = 1
+                window.close()
+                main()
         if event == 'Update Available!':
             latestrelease = 'https://github.com/ColditzColligula/Barcode-Generator/releases'
             webbrowser.open(latestrelease)
             break
+
+
+#   declaring name of Settingsfile and checking if filepath exists
+settingsfile = "bcgsettings.txt"
+isFile = os.path.isfile(settingsfile)
+#print(isFile)
+
+#   Checking if Settingsfile can be found.
+#       when file not found > create with standard theme > read > start
+if isFile == False:
+    with open("bcgsettings.txt", "w") as bcgsettings:
+        bcgsettings.write("BrownBlue")
+        bcgsettings.close
+    with open("bcgsettings.txt", "r") as bcgsettings:
+        settingstheme = bcgsettings.read()
+        bcgsettings.close
+#       when file found > read settings > start
+elif isFile == True:
+    with open("bcgsettings.txt", "r") as bcgsettings:
+        global selectedtheme
+        settingstheme = bcgsettings.read()
+        print(settingstheme)
+        bcgsettings.close
+
+#   defining window colour/theme
+selectedtheme = settingstheme
+sg.theme(selectedtheme)
 
 start()
