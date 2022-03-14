@@ -3,6 +3,7 @@
 
 # Barcode-Generator
 A Python3 based **Barcode**, **QR-Code** and **DataMatrix** Generator
+(Now with a Windows Executable too!)
 
 ## Table of contents
 * [General info](#general-info)
@@ -55,13 +56,20 @@ Just download and execute! (initial start up is slow)
 	
 ## Setup and Usage
 
-Download the above mentioned libraries with pip.
+**The Script was tested on Ubuntu, Debian, Arch and Microsoft Windows 10.**
+
+1. Open a Terminal or CMD/PowerShell
+
+2. Download the above mentioned libraries with pip.
 
 * Example "pip install PySimpleGUI" or "pip3 install PySimpleGUI" depending on your version of Python.
 
-To run the script, simply put the "barcodegen.py" file in an accessible location and open it with your terminal.
+3. Put the script (barcodegen.py) in a location of choice, open a Terminal or CMD/PowerShell in that location and execute it. (alternatively you can point to the file)
 
 * Example $BASH: *"python3 /home/"user"/Desktop/barcodegen.py"*
+* Example CMD/Powershell: *"python3 C:\Users\"user"\Desktop\Barcode\barcodegen.py"*
+
+4. Create some Barcodes!
 
 
 **Preview GIF**
