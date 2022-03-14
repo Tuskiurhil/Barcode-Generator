@@ -76,4 +76,5 @@ The planned features are in no particular order
 * Adding additional Code Formats (Aztec, etc.)
 * Ability to choose where the barcodes will be saved (including potential subfolders)
 * Ability to colour Code (Foreground and Background)
+* Ability to specify which character will split the input (e.g. ; , . , - , / , etc.) Default is ,
 * Creating an executable/AppImage for easier use [(Windows Version is now Available!)](https://www.dropbox.com/s/3edxh5bm2qhpdta/barcodegen%20v05.exe?raw=1)
