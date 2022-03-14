@@ -72,6 +72,7 @@ To run the script, simply put the "barcodegen.py" file in an accessible location
 
 The planned features are in no particular order
 
+* Actual working Progress-Bar that automatically closes when creation of codes is done
 * Adding more Image Formats 
 * Adding additional Code Formats (Aztec, etc.)
 * Ability to choose where the barcodes will be saved (including potential subfolders)
