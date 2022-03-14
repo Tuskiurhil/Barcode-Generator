@@ -7,8 +7,8 @@ A Python3 based Barcode Generator
 ## Table of contents
 * [General info](#general-info)
 * [Setup and Usage](#setup-and-Usage)
-* [Planned Features](#updates)
-* [Windows Executable](#windows)
+* [Planned Features](#planned-features)
+* [Windows Executable](#windows-executable)
 
 ## General info
 
