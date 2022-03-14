@@ -63,6 +63,8 @@ To run the script, simply put the "barcodegen.py" file in an accessible location
 
 * Example $BASH: *"python3 /home/"user"/Desktop/barcodegen.py"*
 
+
+**Preview GIF**
 <img src="https://user-images.githubusercontent.com/79027579/158082081-8406fdd6-ad65-4897-813a-c253572c77a0.gif" width="80%" height="80%" />
 
 ## Planned Features
