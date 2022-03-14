@@ -2,7 +2,7 @@
 
 
 # Barcode-Generator
-A Python3 based Barcode Generator
+A Python3 based **Barcode**, **QR-Code** and **DataMatrix** Generator
 
 ## Table of contents
 * [General info](#general-info)
