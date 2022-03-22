@@ -79,7 +79,7 @@ Just download and execute! (initial start up is slow)
 
 
 ## Known Bugs
-- ~~Using forbidden characters like \ / : * ? " < > | will crash the program~~
+- ~~Using forbidden characters like \ / : * ? " < > | will crash the program~~ (fixed in v0.55)
 - Some Barcode Formats will give a Traceback if an invalid Barcode has been entered in the Data field (Clarification required)
 
 ## Planned Features
