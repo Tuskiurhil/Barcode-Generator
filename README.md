@@ -29,30 +29,30 @@ A Python3 based **Barcode**, **QR-Code** and **DataMatrix** Generator
 Barcode-Generator is a **PythonScript** that takes Values, formats them to a string and turns them into Barcodes
 
 * Current Support:
-  - Code128
-  - Code39
-  - European Article Number 8
-  - European Article Number 13
-  - European Article Number 14
-  - Japan Article Number
-  - International Standard Book Number 10
-  - International Standard Book Number 13
-  - International Standard Serial Number
-  - Universal Product Code A
-  - PZN (PharmaZentralNummer - Germanys Standardized Pharmaceutical Number)
+  - [Code128](https://en.wikipedia.org/wiki/Code_128)
+  - [Code39](https://en.wikipedia.org/wiki/Code_39)
+  - [European Article Number 8](https://en.wikipedia.org/wiki/EAN-8)
+  - [European Article Number 13](https://en.wikipedia.org/wiki/International_Article_Number)
+  - [European Article Number 14](https://en.wikipedia.org/wiki/International_Article_Number)
+  - [Japan Article Number](https://en.wikipedia.org/wiki/International_Article_Number#jan)
+  - [International Standard Book Number 10](https://en.wikipedia.org/wiki/International_Standard_Book_Number)
+  - [International Standard Book Number 13](https://en.wikipedia.org/wiki/International_Standard_Book_Number)
+  - [International Standard Serial Number](https://en.wikipedia.org/wiki/International_Standard_Serial_Number)
+  - [Universal Product Code A](https://en.wikipedia.org/wiki/Universal_Product_Code)
+  - [PZN (PharmaZentralNummer - Germanys Standardized Pharmaceutical Number)](https://de-m-wikipedia-org.translate.goog/wiki/Pharmazentralnummer?_x_tr_sl=de&_x_tr_tl=en&_x_tr_hl=en-US&_x_tr_pto=wapp)
 
-  - QR Code
+  - [QR Code](https://en.wikipedia.org/wiki/QR_code)
 
-  - Datamatrix
+  - [Datamatrix](https://en.wikipedia.org/wiki/Data_Matrix)
 
 * Requirements:
-  - PySimpleGUI
-  - python-barcode
-  - pylibdmtx
-  - qrcode
-  - opencv-python
-  - numpy
-  - requests
+  - [PySimpleGUI](https://github.com/PySimpleGUI)
+  - [python-barcode](https://github.com/WhyNotHugo/python-barcode)
+  - [pylibdmtx](https://github.com/NaturalHistoryMuseum/pylibdmtx/)
+  - [qrcode](https://github.com/lincolnloop/python-qrcode)
+  - [opencv-python](https://github.com/opencv/opencv-python)
+  - [numpy](https://github.com/numpy/numpy)
+  - [requests](https://github.com/psf/requests)
 
 ## Windows Executable
 
