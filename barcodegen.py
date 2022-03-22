@@ -60,6 +60,15 @@ def main():
             barcode = button(code, writer=ImageWriter(IMGFORMAT))
             barcode.save(code+' - '+buttonname, {"module_width":0.35, "module_height":16, "font_size": 25, "text_distance": 0.85, "quiet_zone": 0})
 #   resizing our image to fit within our product label document
+            code = code.replace("\\",".")
+            code = code.replace("/",".")
+            code = code.replace(":",".")
+            code = code.replace("*",".")
+            code = code.replace("?",".")
+            code = code.replace('"',".")
+            code = code.replace("<",".")
+            code = code.replace(">",".")
+            code = code.replace("|",".")
             filename = (code+' - '+buttonname+EXTENSION)
             if values['-CHECKOUTPUT-'] == True:
                 print(filename)
@@ -108,8 +117,15 @@ def main():
             qr.make(fit=True)
             img = qr.make_image(fill_color="black", back_color="white")
 #   Replacing the / with a dot to make sure that URL's will not break the program when saving
+            code = code.replace("\\",".")
             code = code.replace("/",".")
             code = code.replace(":",".")
+            code = code.replace("*",".")
+            code = code.replace("?",".")
+            code = code.replace('"',".")
+            code = code.replace("<",".")
+            code = code.replace(">",".")
+            code = code.replace("|",".")
             img.save(code+EXTENSION)
 # ____________________________________________________________________
 
@@ -141,8 +157,15 @@ def main():
 #   The input needs to be formated to utf-8, otherwise the output will be a garbled mess
         encodedmatrix = encode(code.encode('utf-8'))
         encodedimg = Image.frombytes('RGB', (encodedmatrix.width, encodedmatrix.height), encodedmatrix.pixels)
+        code = code.replace("\\",".")
         code = code.replace("/",".")
         code = code.replace(":",".")
+        code = code.replace("*",".")
+        code = code.replace("?",".")
+        code = code.replace('"',".")
+        code = code.replace("<",".")
+        code = code.replace(">",".")
+        code = code.replace("|",".")
         encodedimg.save(code+EXTENSION)
 # ____________________________________________________________________
 
@@ -419,7 +442,7 @@ def checkforupdate():
 updating = 0
 #   ******** IMPORTANT ********
 #   Version Number of current script, don't forget to change after updating, otherwise Script Update functionality might not work
-versionnr = 'v0.5'
+versionnr = 'v0.55'
 #   ******** IMPORTANT ********
 
 def start():
