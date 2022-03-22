@@ -95,6 +95,7 @@ The planned features are in no particular order
 * Actual working Progress-Bar that automatically closes when creation of codes is done
 * Adding more Image Formats 
 * Adding additional Code Formats (Aztec, etc.)
+* Ability to enter extra text under the Barcode (e.g. Name of the Article)
 * Ability to choose where the barcodes will be saved (including potential subfolders)
 * Ability to colour Code (Foreground and Background)
 * Ability to specify which character will split the input (e.g. ; , . , - , / , etc.) Default is ,
