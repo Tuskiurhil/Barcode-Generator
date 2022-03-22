@@ -1,6 +1,11 @@
 <img src="https://user-images.githubusercontent.com/79027579/157531034-474a6480-1168-44fc-a7b5-d66144a8103b.png" width=30% height=30%>
 
-
+***
+![image](https://img.shields.io/github/v/release/ColditzColligula/Barcode-Generator?color=green&label=Version&logo=Python&logoColor=yellow)
+![image](https://img.shields.io/github/last-commit/ColditzColligula/Barcode-Generator?color=blue&label=Last%20Update)
+![image](https://img.shields.io/github/languages/code-size/ColditzColligula/Barcode-Generator?color=yellow&label=Code%20Size)
+![image](https://img.shields.io/github/license/ColditzColligula/Barcode-Generator?color=orange&label=License)
+***
 # Barcode-Generator
 A Python3 based **Barcode**, **QR-Code** and **DataMatrix** Generator
 (Now with a Windows Executable too!)
