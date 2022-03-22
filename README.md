@@ -10,6 +10,7 @@ A Python3 based **Barcode**, **QR-Code** and **DataMatrix** Generator
 * [Windows Executable](#windows-executable)
 * [Setup and Usage](#setup-and-Usage)
 * [Planned Features](#planned-features)
+* [Known Bugs](#known-bugs)
 
 ## General info
 
@@ -76,6 +77,11 @@ Just download and execute! (initial start up is slow)
 
 <img src="https://user-images.githubusercontent.com/79027579/158082081-8406fdd6-ad65-4897-813a-c253572c77a0.gif" width="80%" height="80%" />
 
+
+## Known Bugs
+- ~~Using forbidden characters like \ / : * ? " < > | will crash the program~~
+- Some Barcode Formats will give a Traceback if an invalid Barcode has been entered in the Data field (Clarification required)
+
 ## Planned Features
 
 The planned features are in no particular order
@@ -86,4 +92,4 @@ The planned features are in no particular order
 * Ability to choose where the barcodes will be saved (including potential subfolders)
 * Ability to colour Code (Foreground and Background)
 * Ability to specify which character will split the input (e.g. ; , . , - , / , etc.) Default is ,
-* Creating an executable/AppImage for easier use [(Windows Version is now Available!)](https://www.dropbox.com/s/3edxh5bm2qhpdta/barcodegen%20v05.exe?raw=1)
+* Creating an executable/AppImage for easier use [(Windows Version is now Available! outdated)](https://www.dropbox.com/s/3edxh5bm2qhpdta/barcodegen%20v05.exe?raw=1)
