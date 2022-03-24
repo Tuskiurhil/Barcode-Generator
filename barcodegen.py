@@ -15,7 +15,7 @@ from barcode import (
     )
 from barcode.writer import ImageWriter
 import qrcode
-from PIL import Image
+import PIL
 from pylibdmtx.pylibdmtx import encode
 import cv2
 import numpy as np
@@ -27,6 +27,7 @@ import os
 IMGFORMAT = ""
 EXTENSION = ""
 SELTHEME = ""
+code = ""
 
 def main():
 
@@ -36,10 +37,12 @@ def main():
 #   --- MAIN BARCODE FUNCTION ---
 #   defining main function of creating and saving barcode image
     def createbarcode():
+        global code
         WIDTH = values['-WIDTH-']
         HEIGHT = values['-HEIGHT-']
-        global IMGFORMAT
-        global EXTENSION
+        BGCOLOUR = values['-BGCOLOUR-']
+        FGCOLOUR = values['-FGCOLOUR-']
+        global IMGFORMAT, EXTENSION
         target = values[0]
         print('\nCreating Barcode')
 #   SKU equals our input from before
@@ -58,7 +61,7 @@ def main():
                 EXTENSION = '.bmp'
 #   "button" will be replaced by the radio selection done further below     
             barcode = button(code, writer=ImageWriter(IMGFORMAT))
-            barcode.save(code+' - '+buttonname, {"module_width":0.35, "module_height":16, "font_size": 25, "text_distance": 0.85, "quiet_zone": 0})
+            barcode.save(code+' - '+buttonname, {"module_width":0.35, "module_height":16, "font_size": 25, "text_distance": 0.85, "quiet_zone": 0, "background": BGCOLOUR, "foreground": FGCOLOUR})
 #   resizing our image to fit within our product label document
             code = code.replace("\\",".")
             code = code.replace("/",".")
@@ -81,11 +84,12 @@ def main():
 # ____________________________________________________________________
 #   --- MAIN QR-CODE FUNCTION ---
     def createqrcode():
-        QRVERSION = values['-QRSIZE-']
-        QRBOX_SIZE = values['-QRBOXSIZE-']
-        QRBORDER = values['-QRBORDER-']
-        global IMGFORMAT
-        global EXTENSION
+        #QRVERSION = values['-QRSIZE-']
+        #QRBOX_SIZE = values['-QRBOXSIZE-']
+        #QRBORDER = values['-QRBORDER-']
+        BGCOLOUR = values['-BGCOLOUR-']
+        FGCOLOUR = values['-FGCOLOUR-']
+        global IMGFORMAT, EXTENSION, code
         target = values[0]
         print('\nCreating QR-Code')
         SKU = str(values[0])
@@ -108,14 +112,14 @@ def main():
                 print(code+EXTENSION)
 #   QR Creation
             qr = qrcode.QRCode(
-            version=QRVERSION,
+            #version=QRVERSION,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
-            box_size=QRBOX_SIZE,
-            border=QRBORDER,
+            #box_size=QRBOX_SIZE,
+            border=1
             )
             qr.add_data(code)
             qr.make(fit=True)
-            img = qr.make_image(fill_color="black", back_color="white")
+            img = qr.make_image(fill_color=FGCOLOUR, back_color=BGCOLOUR)
 #   Replacing the / with a dot to make sure that URL's will not break the program when saving
             code = code.replace("\\",".")
             code = code.replace("/",".")
@@ -132,8 +136,7 @@ def main():
 #   --- MAIN DATAMATRIX FUNCTION ---
 # ____________________________________________________________________
     def createdatamatrix():
-        global IMGFORMAT
-        global EXTENSION
+        global IMGFORMAT, EXTENSION, code
         target = values[0]
         print('\nCreating Datamatrix-Code')
         SKU = str(values[0])
@@ -202,18 +205,19 @@ def main():
 # ____________________________________________________________________
 
 #   Content of the GUI, including Button Selection for which Barcode Format to use
-#   Selection changes depending on wether or not the Version in use is up to date.
 
 #   User has chosen to create a QR Code
     layoutQR = [  
         [sg.Text('QR-Code Generator')],
         [sg.Text('Enter Data'), sg.InputText()],
-        [sg.Text('Size (1-40)'), sg.InputText('1', key='-QRSIZE-')],
-        [sg.Text('Box Size'), sg.InputText('10', key='-QRBOXSIZE-')],
-        [sg.Text('Border'), sg.InputText('1', key='-QRBORDER-')],
+        #[sg.Text('Size (1-40)'), sg.InputText('1', key='-QRSIZE-')],
+        #[sg.Text('Box Size'), sg.InputText('10', key='-QRBOXSIZE-')],
+        #[sg.Text('Border'), sg.InputText('1', key='-QRBORDER-')],
+        [sg.Text('Foreground Colour:'), sg.InputText('#000000', key='-FGCOLOUR-'), sg.ColorChooserButton(button_text = "Select colour", target='-FGCOLOUR-')],
+        [sg.Text('Background Colour:'), sg.InputText('#FFFFFF', key='-BGCOLOUR-'), sg.ColorChooserButton(button_text = "Select colour", target='-BGCOLOUR-')],
 
         [sg.Radio('PNG', "IMGFORMAT", default=True, key="-PNG-"),
-        sg.Radio('JPEG', "IMGFORMAT", key="-JPEG-"),
+        #sg.Radio('JPEG', "IMGFORMAT", key="-JPEG-"),
         sg.Radio('BMP', "IMGFORMAT", key="-BMP-")],
 
         [sg.Radio('QR', "SELECTION", key="-BUTTON11-", default=True)],
@@ -248,6 +252,11 @@ def main():
         [sg.Text('Enter SKU'), sg.InputText()],
         [sg.Text('Width:'), sg.InputText('326', key='-WIDTH-')],
         [sg.Text('Height:'), sg.InputText('274', key='-HEIGHT-')],
+        [sg.Text('Foreground Colour:'), sg.InputText('#000000', key='-FGCOLOUR-'), sg.ColorChooserButton(button_text = "Select colour", target='-FGCOLOUR-')],
+        [sg.Text('Background Colour:'), sg.InputText('#FFFFFF', key='-BGCOLOUR-'), sg.ColorChooserButton(button_text = "Select colour", target='-BGCOLOUR-')],
+        #[sg.In("", visible=True, enable_events=True, key='set_line_color'),
+        #   sg.ColorChooserButton("TEST", size=(1, 1), target='set_line_color', button_color=('#1f77b4', '#1f77b4'),
+        #                         border_width=1, key='set_line_color_chooser')]
 
         [sg.Radio('PNG', "IMGFORMAT", default=True, key="-PNG-"),
         sg.Radio('JPEG', "IMGFORMAT", key="-JPEG-"),
@@ -306,6 +315,8 @@ def main():
 #   Creating GUI Window
     while True:
         event, values = window.read()
+        if event == 'set_line_color':
+            window['set_line_color_chooser'].Update(button_color=(values[event], values[event]))
         if event == 'Update Available!':
             latestrelease = 'https://github.com/ColditzColligula/Barcode-Generator/releases'
             webbrowser.open(latestrelease)
@@ -316,57 +327,62 @@ def main():
 #   Making sure to only activate the necessary buttons. Having unused buttons active will crash the program!
         if event == 'Create Barcode(s)':
             try:
-                if BARCODESELECTION == 1:
-                    if values["-BUTTON-"] == True:
-                        button = code128
-                        buttonname = 'code128'
-                        createbarcode()
-                    elif values["-BUTTON1-"] == True:
-                        button = code39
-                        buttonname = 'code39'
-                        createbarcode()
-                    elif values["-BUTTON2-"] == True:
-                        button = ean8
-                        buttonname = 'ean8'
-                        createbarcode()
-                    elif values["-BUTTON3-"] == True:
-                        button = ean13
-                        buttonname = 'ean13'
-                        createbarcode()
-                    elif values["-BUTTON4-"] == True:
-                        button = ean14
-                        buttonname = 'ean14'
-                        createbarcode()
-                    elif values["-BUTTON5-"] == True:
-                        button = upca
-                        buttonname = 'upca'
-                        createbarcode()
-                    elif values["-BUTTON6-"] == True:
-                        button = jan
-                        buttonname = 'jan'
-                        createbarcode()
-                    elif values["-BUTTON7-"] == True:
-                        button = issn
-                        buttonname = 'issn'
-                        createbarcode()
-                    elif values["-BUTTON8-"] == True:
-                        button = pzn
-                        buttonname = 'pzn'
-                        createbarcode()
-                    elif values["-BUTTON9-"] == True:
-                        button = isbn10
-                        buttonname = 'isbn10'
-                        createbarcode()
-                    elif values["-BUTTON10-"] == True:
-                        button = isbn13
-                        buttonname = 'isbn13'
-                        createbarcode()
-                elif QRCODESELECTION == 1:
-                        if values["-BUTTON11-"] == True:
-                            createqrcode()
-                elif DATAMATRIXSELECTION == 1:
-                        if values["-BUTTON12-"] == True:
-                            createdatamatrix()
+                #if code == "":
+                #    [sg.popup_error('Invalid Image Size or Input')]
+                #    window.close()
+                #    start()
+                #elif code != "":
+                    if BARCODESELECTION == 1:
+                        if values["-BUTTON-"] == True:
+                            button = code128
+                            buttonname = 'code128'
+                            createbarcode()
+                        elif values["-BUTTON1-"] == True:
+                            button = code39
+                            buttonname = 'code39'
+                            createbarcode()
+                        elif values["-BUTTON2-"] == True:
+                            button = ean8
+                            buttonname = 'ean8'
+                            createbarcode()
+                        elif values["-BUTTON3-"] == True:
+                            button = ean13
+                            buttonname = 'ean13'
+                            createbarcode()
+                        elif values["-BUTTON4-"] == True:
+                            button = ean14
+                            buttonname = 'ean14'
+                            createbarcode()
+                        elif values["-BUTTON5-"] == True:
+                            button = upca
+                            buttonname = 'upca'
+                            createbarcode()
+                        elif values["-BUTTON6-"] == True:
+                            button = jan
+                            buttonname = 'jan'
+                            createbarcode()
+                        elif values["-BUTTON7-"] == True:
+                            button = issn
+                            buttonname = 'issn'
+                            createbarcode()
+                        elif values["-BUTTON8-"] == True:
+                            button = pzn
+                            buttonname = 'pzn'
+                            createbarcode()
+                        elif values["-BUTTON9-"] == True:
+                            button = isbn10
+                            buttonname = 'isbn10'
+                            createbarcode()
+                        elif values["-BUTTON10-"] == True:
+                            button = isbn13
+                            buttonname = 'isbn13'
+                            createbarcode()
+                    elif QRCODESELECTION == 1:
+                            if values["-BUTTON11-"] == True:
+                                createqrcode()
+                    elif DATAMATRIXSELECTION == 1:
+                            if values["-BUTTON12-"] == True:
+                                createdatamatrix()
             except ValueError as err:
                 err.args = ("Invalid Image Size or Input")
 #   When hitting "Save & Exit" the program will write the selected Theme to the settings file and then tell the user to restart the application. The program will close automatically.
@@ -442,12 +458,13 @@ def checkforupdate():
 updating = 0
 #   ******** IMPORTANT ********
 #   Version Number of current script, don't forget to change after updating, otherwise Script Update functionality might not work
-versionnr = 'v0.55'
+versionnr = 'v0.6'
 #   ******** IMPORTANT ********
 
 def start():
     global updating
 #   LAYOUT LISTS
+#   Selection changes depending on wether or not the Version in use is up to date.
 #   An Update for the Script was found
     layout1 = [  
         [sg.Text('- Choose your desired Code Type -'),
