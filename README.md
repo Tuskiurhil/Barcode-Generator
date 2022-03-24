@@ -97,7 +97,7 @@ The planned features are in no particular order
 * Adding additional Code Formats (Aztec, etc.)
 * Ability to enter extra text under the Barcode (e.g. Name of the Article)
 * Ability to choose where the barcodes will be saved (including potential subfolders)
-* Ability to colour Code (Foreground and Background)
+* ~~Ability to colour Code (Foreground and Background)~~ Added in v0.6
 * Ability to stylize QR-Codes (e.g. Rounded Corners, Gradient, Image in the Center, etc.)
 * Ability to specify which character will split the input (e.g. ; , . , - , / , etc.) Default is ,
 * Creating an executable/AppImage for easier use [(Windows Version is now Available! outdated)](https://www.dropbox.com/s/3edxh5bm2qhpdta/barcodegen%20v05.exe?raw=1)
