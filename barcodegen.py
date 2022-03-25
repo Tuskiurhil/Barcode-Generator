@@ -1,4 +1,5 @@
 #   import main functionality
+from importlib.machinery import EXTENSION_SUFFIXES
 import PySimpleGUI as sg
 from barcode import (
     Code128 as code128, 
@@ -15,8 +16,12 @@ from barcode import (
     )
 from barcode.writer import ImageWriter
 import qrcode
+from qrcode.image.styledpil import StyledPilImage
+from qrcode.image.styles.colormasks import ImageColorMask
 import PIL
+from PIL import Image
 from pylibdmtx.pylibdmtx import encode
+from aztec_code_generator import AztecCode
 import cv2
 import numpy as np
 import time
@@ -84,43 +89,74 @@ def main():
 # ____________________________________________________________________
 #   --- MAIN QR-CODE FUNCTION ---
     def createqrcode():
+        global IMGFORMAT, EXTENSION, code, ERRCORRQR, QRMODULE
         #QRVERSION = values['-QRSIZE-']
         #QRBOX_SIZE = values['-QRBOXSIZE-']
         #QRBORDER = values['-QRBORDER-']
+        ERRCORRQR = ""
+        if values["-ERRCORRL-"] == True:
+            #7%
+            ERRCORRQR = qrcode.constants.ERROR_CORRECT_L
+        if values["-ERRCORRM-"] == True:
+            #15%
+            ERRCORRQR = qrcode.constants.ERROR_CORRECT_M
+        if values["-ERRCORRQ-"] == True:
+            #25%
+            ERRCORRQR = qrcode.constants.ERROR_CORRECT_Q
+        if values["-ERRCORRH-"] == True:
+            #30%
+            ERRCORRQR = qrcode.constants.ERROR_CORRECT_H
+
+        # QRMODULE = ""
+        # if values["-QRSQUAREMODULE-"] == True:
+        #     QRMODULE = module_drawer=SquareModuleDrawer()
+        # if values["-QRGAPPEDSQUAREMODULE-"] == True:
+        #     QRMODULE = "GappedSquareModuleDrawer"
+        # if values["-QRCIRCLEMODULE-"] == True:
+        #     QRMODULE = CircleModuleDrawer
+        # if values["-QRROUNDEDMODULE-"] == True:
+        #     QRMODULE = 'module_drawer=RoundedModuleDrawer()'
+        # if values["-QRVERTICALBARSMODULE-"] == True:
+        #     QRMODULE = 'VerticalBarsDrawer()'
+        # if values["-QRHORIZBARSMODULE-"] == True:
+        #     QRMODULE = 'module_drawer=HorizontalBarsDrawer()'
+        
         BGCOLOUR = values['-BGCOLOUR-']
         FGCOLOUR = values['-FGCOLOUR-']
-        global IMGFORMAT, EXTENSION, code
+        #EMBEDIMG = values['-EMBEDIMG-']
         target = values[0]
         print('\nCreating QR-Code')
+        #print(ERRCORRQR)
+        #print(QRMODULE)
         SKU = str(values[0])
         SKUS = SKU.split(',')
         for code in SKUS:
             if values["-PNG-"] == True:
                 IMGFORMAT = 'PNG'
                 EXTENSION = '.png'
-            elif values["-JPEG-"] == True:
-                window.close()
-                sg.popup_error('JPEG is not supported for QR-Codes!')
-                start()
+            #if values["-JPEG-"] == True:
+            #    window.close()
+            #    sg.popup_error('JPEG is not supported for QR-Codes!')
+            #    start()
                 #IMGFORMAT = 'JPEG'
                 #EXTENSION = '.jpeg'
-            elif values["-BMP-"] == True:
+            if values["-BMP-"] == True:
                 IMGFORMAT = 'BMP'
                 EXTENSION = '.bmp'
 
             if values['-CHECKOUTPUT-'] == True:
                 print(code+EXTENSION)
-#   QR Creation
+    #   QR Creation
             qr = qrcode.QRCode(
             #version=QRVERSION,
-            error_correction=qrcode.constants.ERROR_CORRECT_L,
-            #box_size=QRBOX_SIZE,
+            error_correction=ERRCORRQR,
+            #box_size=10,
             border=1
             )
             qr.add_data(code)
             qr.make(fit=True)
-            img = qr.make_image(fill_color=FGCOLOUR, back_color=BGCOLOUR)
-#   Replacing the / with a dot to make sure that URL's will not break the program when saving
+            img = qr.make_image(fill_color=FGCOLOUR, back_color=BGCOLOUR)#, image_factory=StyledPilImage, embeded_image_path=EMBEDIMG)
+    #   Replacing the / with a dot to make sure that URL's will not break the program when saving
             code = code.replace("\\",".")
             code = code.replace("/",".")
             code = code.replace(":",".")
@@ -172,6 +208,39 @@ def main():
         encodedimg.save(code+EXTENSION)
 # ____________________________________________________________________
 
+#   --- MAIN AZTEC FUNCTION ---
+# ____________________________________________________________________
+    def createazteccode():
+        global IMGFORMAT, EXTENSION, code
+        target = values[0]
+        print('\nCreating Aztec-Code')
+        SKU = str(values[0])
+        SKUS = SKU.split(',')
+        for code in SKUS:
+            if values["-PNG-"] == True:
+                IMGFORMAT = 'PNG'
+                EXTENSION = '.png'
+            if values["-JPEG-"] == True:
+                IMGFORMAT = 'JPEG'
+                EXTENSION = '.jpeg'
+            if values["-GIF-"] == True:
+                IMGFORMAT = 'GIF'
+                EXTENSION = '.gif'
+            if values['-CHECKOUTPUT-'] == True:
+                print(code+EXTENSION)
+#   Aztec Creation
+        aztec_code = AztecCode(code)
+        code = code.replace("\\",".")
+        code = code.replace("/",".")
+        code = code.replace(":",".")
+        code = code.replace("*",".")
+        code = code.replace("?",".")
+        code = code.replace('"',".")
+        code = code.replace("<",".")
+        code = code.replace(">",".")
+        code = code.replace("|",".")
+        aztec_code.save(code+EXTENSION, module_size=4, border=1)
+        #aztec_code.image(code+EXTENSION, module_size=20, border=1)
 # ____________________________________________________________________
 #   Main Settings Function
     def savesettings():
@@ -215,6 +284,20 @@ def main():
         #[sg.Text('Border'), sg.InputText('1', key='-QRBORDER-')],
         [sg.Text('Foreground Colour:'), sg.InputText('#000000', key='-FGCOLOUR-'), sg.ColorChooserButton(button_text = "Select colour", target='-FGCOLOUR-')],
         [sg.Text('Background Colour:'), sg.InputText('#FFFFFF', key='-BGCOLOUR-'), sg.ColorChooserButton(button_text = "Select colour", target='-BGCOLOUR-')],
+        #[sg.Text('Embedded Image'), sg.InputText('', key='-EMBEDIMG-'), sg.FileBrowse(target=('-EMBEDIMG-'))],
+
+        [sg.Radio('Error Correct L 7%', "ERRORCORRECTION", key="-ERRCORRL-"), 
+        sg.Radio('Error Correct M 15%', "ERRORCORRECTION", default=True, key="-ERRCORRM-"),
+        sg.Radio('Error Correct Q 25%', "ERRORCORRECTION", key="-ERRCORRQ-"),
+        sg.Radio('Error Correct H 30%', "ERRORCORRECTION", key="-ERRCORRH-")],
+
+        # [sg.Radio('Squares', "QRDESIGN", default=True, key="-QRSQUAREMODULE-"),
+        # sg.Radio('Gapped Squares', "QRDESIGN", key="-QRGAPPEDSQUAREMODULE-"), 
+        # sg.Radio('Circles', "QRDESIGN", key="-QRCIRCLEMODULE-"), 
+        # sg.Radio('Rounded', "QRDESIGN", key="-QRROUNDEDMODULE-"), 
+        # sg.Radio('Vertical Bars', "QRDESIGN", key="-QRVERTICALBARSMODULE-"), 
+        # sg.Radio('Horizontal', "QRDESIGN", key="-QRHORIZBARSMODULE-")],
+
 
         [sg.Radio('PNG', "IMGFORMAT", default=True, key="-PNG-"),
         #sg.Radio('JPEG', "IMGFORMAT", key="-JPEG-"),
@@ -241,6 +324,24 @@ def main():
         sg.Radio('GIF', "IMGFORMAT", key="-GIF-")],
 
         [sg.Radio('DATAMATRIX', "SELECTION", key="-BUTTON12-", default=True)],
+
+        [sg.Checkbox('Print Output to Console', default=False, key='-CHECKOUTPUT-')],
+
+        [sg.Button('Create Barcode(s)'), sg.Button('Close')] ]
+
+#   User has chosen to create a Aztec Code
+    layoutAZTEC = [  
+        [sg.Text('Aztec Code Generator')],
+        [sg.Text('Enter Data'), sg.InputText()],
+        #[sg.Text('Size (1-40)'), sg.InputText('1', key='-QRSIZE-')],
+        #[sg.Text('Box Size'), sg.InputText('10', key='-QRBOXSIZE-')],
+        #[sg.Text('Border'), sg.InputText('1', key='-QRBORDER-')],
+
+        [sg.Radio('PNG', "IMGFORMAT", default=True, key="-PNG-"),
+        sg.Radio('JPEG', "IMGFORMAT", key="-JPEG-"),
+        sg.Radio('GIF', "IMGFORMAT", key="-GIF-")],
+
+        [sg.Radio('AZTEC', "SELECTION", key="-BUTTON13-", default=True)],
 
         [sg.Checkbox('Print Output to Console', default=False, key='-CHECKOUTPUT-')],
 
@@ -307,6 +408,9 @@ def main():
             event, values = window.read()
     elif DATAMATRIXSELECTION == 1:
             window = sg.Window('Barcode Generator', layoutDATAMATRIX)
+            event, values = window.read()
+    elif AZTECSELECTION == 1:
+            window = sg.Window('Barcode Generator', layoutAZTEC)
             event, values = window.read()
     elif SETTINGSSELECTION == 1:
         window = sg.Window('Barcode Generator', layoutSETTINGS)
@@ -383,6 +487,9 @@ def main():
                     elif DATAMATRIXSELECTION == 1:
                             if values["-BUTTON12-"] == True:
                                 createdatamatrix()
+                    elif AZTECSELECTION == 1:
+                            if values["-BUTTON13-"] == True:
+                                createazteccode()
             except ValueError as err:
                 err.args = ("Invalid Image Size or Input")
 #   When hitting "Save & Exit" the program will write the selected Theme to the settings file and then tell the user to restart the application. The program will close automatically.
@@ -429,7 +536,9 @@ def main():
             window = sg.Window(buttonname, layoutcreatecode)
         elif DATAMATRIXSELECTION == 1:
             window = sg.Window(buttonname, layoutcreatecode)
-        # elif SETTINGSSELECTION == 1:
+        elif AZTECSELECTION == 1:
+            window = sg.Window(buttonname, layoutcreatecode)
+        #elif SETTINGSSELECTION == 1:
         #     window = sg.Window(buttonname, layoutsavesettings)'
 
 
@@ -458,7 +567,7 @@ def checkforupdate():
 updating = 0
 #   ******** IMPORTANT ********
 #   Version Number of current script, don't forget to change after updating, otherwise Script Update functionality might not work
-versionnr = 'v0.6'
+versionnr = 'v0.65'
 #   ******** IMPORTANT ********
 
 def start():
@@ -475,6 +584,8 @@ def start():
 
         [sg.Radio('Datamatrix', "SELECTION", key="-DATAMATRIX-")],
 
+        [sg.Radio('Aztec', "SELECTION", key="-AZTEC-")],
+
         [sg.Radio('Settings', "SELECTION", key="-SETTINGS-")],
 
         [sg.Button('Continue'), sg.Button('Close')] ]]
@@ -487,6 +598,8 @@ def start():
         [sg.Radio('QR - CODE', "SELECTION", key="-QRCODES-")],
 
         [sg.Radio('Datamatrix', "SELECTION", key="-DATAMATRIX-")],
+
+        [sg.Radio('Aztec', "SELECTION", key="-AZTEC-")],
 
         [sg.Radio('Settings', "SELECTION", key="-SETTINGS-")],
 
@@ -503,6 +616,7 @@ def start():
     global BARCODESELECTION
     global QRCODESELECTION
     global DATAMATRIXSELECTION
+    global AZTECSELECTION
     global SETTINGSSELECTION
 #   This will grab the Name of the current release from the github repo (eg. v0.3) and compare it to the version number defined further above
 #   ... if the version numbers don't match the Main Menu Screen will show an "Update Available!" Button that when pressed will bring the
@@ -550,10 +664,19 @@ def start():
                 DATAMATRIXSELECTION = 1
                 window.close()
                 main()
+            elif values['-AZTEC-'] == True:
+                QRCODESELECTION = 0
+                BARCODESELECTION = 0
+                DATAMATRIXSELECTION = 0
+                AZTECSELECTION = 1
+                SETTINGSSELECTION = 0
+                window.close()
+                main()
             elif values['-SETTINGS-'] == True:
                 QRCODESELECTION = 0
                 BARCODESELECTION = 0
                 DATAMATRIXSELECTION = 0
+                AZTECSELECTION = 0
                 SETTINGSSELECTION = 1
                 window.close()
                 main()
