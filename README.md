@@ -45,6 +45,8 @@ Barcode-Generator is a **PythonScript** that takes Values, formats them to a str
 
   - [Datamatrix](https://en.wikipedia.org/wiki/Data_Matrix)
 
+  - [Aztec Code](https://en.wikipedia.org/wiki/Aztec_Code)
+
 * Requirements:
   - [PySimpleGUI](https://github.com/PySimpleGUI)
   - [python-barcode](https://github.com/WhyNotHugo/python-barcode)
@@ -53,6 +55,7 @@ Barcode-Generator is a **PythonScript** that takes Values, formats them to a str
   - [opencv-python](https://github.com/opencv/opencv-python)
   - [numpy](https://github.com/numpy/numpy)
   - [requests](https://github.com/psf/requests)
+  - [aztec_code_generator](https://github.com/dlenski/aztec_code_generator)
 
 ## Windows Executable
 
@@ -94,10 +97,10 @@ The planned features are in no particular order
 
 * Actual working Progress-Bar that automatically closes when creation of codes is done
 * Adding more Image Formats 
-* Adding additional Code Formats (Aztec, etc.)
+* Adding additional Code Formats
 * Ability to enter extra text under the Barcode (e.g. Name of the Article)
 * Ability to choose where the barcodes will be saved (including potential subfolders)
 * ~~Ability to colour Code (Foreground and Background)~~ Added in v0.6
-* Ability to stylize QR-Codes (e.g. Rounded Corners, Gradient, Image in the Center, etc.)
+* Ability to stylize QR-Codes (e.g. Rounded Corners, Gradient, ~~Image in the Center~~, etc.)
 * Ability to specify which character will split the input (e.g. ; , . , - , / , etc.) Default is ,
 * Creating an executable/AppImage for easier use [(Windows Version is now Available! outdated)](https://www.dropbox.com/s/3edxh5bm2qhpdta/barcodegen%20v05.exe?raw=1)
