@@ -62,7 +62,7 @@ Barcode-Generator is a **PythonScript** that takes Values, formats them to a str
 There is now a Windows Executable (Test Build).
 Just download and execute! (initial start up is slow)
 
-[Barcodegen v05.exe](https://www.dropbox.com/s/3edxh5bm2qhpdta/barcodegen%20v05.exe?raw=1)
+[Barcodegen v0.65.exe](https://www.dropbox.com/s/ufpr24zs07g0b21/barcodegen%20v0.65.exe?raw=1)
 	
 ## Setup and Usage
 
@@ -103,4 +103,4 @@ The planned features are in no particular order
 * ~~Ability to colour Code (Foreground and Background)~~ Added in v0.6
 * Ability to stylize QR-Codes (e.g. Rounded Corners, Gradient, ~~Image in the Center~~, etc.)
 * Ability to specify which character will split the input (e.g. ; , . , - , / , etc.) Default is ,
-* Creating an executable/AppImage for easier use [(Windows Version is now Available! outdated)](https://www.dropbox.com/s/3edxh5bm2qhpdta/barcodegen%20v05.exe?raw=1)
+* Creating an executable/AppImage for easier use [(Windows Version is now Available! V0.65)](https://www.dropbox.com/s/ufpr24zs07g0b21/barcodegen%20v0.65.exe?raw=1)
