@@ -567,7 +567,7 @@ def checkforupdate():
 updating = 0
 #   ******** IMPORTANT ********
 #   Version Number of current script, don't forget to change after updating, otherwise Script Update functionality might not work
-versionnr = 'v0.65'
+versionnr = 'v0.66'
 #   ******** IMPORTANT ********
 
 def start():
