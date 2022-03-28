@@ -8,7 +8,7 @@
 ![image](https://img.shields.io/github/downloads/ColditzColligula/Barcode-Generator/total?color=cyan&label=Downloads)
 ***
 # Barcode-Generator
-A Python3 based **Barcode**, **QR-Code** and **DataMatrix** Generator
+A Python3 based **Barcode**, **QR-Code**, **Aztec** and **DataMatrix** Generator
 (Now with a Windows Executable too!)
 
 ## Table of contents
